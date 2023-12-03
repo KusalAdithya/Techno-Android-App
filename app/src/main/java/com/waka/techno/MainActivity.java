@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new ProfileFragment());
 
             findViewById(R.id.bottomNavProfile).setSelected(true);
-//            findViewById(R.id.sideNavProfile).setSelected(true);
+//            findViewById(R.id.sideNavProfile).setSelected(true); //////////////////////////
 
             findViewById(R.id.bottomNavHome).setSelected(false);
             findViewById(R.id.sideNavHome).setSelected(false);
