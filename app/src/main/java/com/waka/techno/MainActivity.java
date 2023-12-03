@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             findViewById(R.id.sideNavHome).setSelected(true);
 
             findViewById(R.id.bottomNavProfile).setSelected(false);
-//            findViewById(R.id.sideNavProfile).setSelected(false);
+//            findViewById(R.id.sideNavProfile).setSelected(false); /////////////
 
             item.setChecked(false);
 
