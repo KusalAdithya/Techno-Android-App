@@ -97,6 +97,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (item.getItemId() == R.id.bottomNavAbout) {
             loadFragment(new AboutFragment());
 
+        }else if (item.getItemId() == R.id.bottomNavOrders) {
+            loadFragment(new OrderFragment());
+
         }
 
         drawerLayout.close();
