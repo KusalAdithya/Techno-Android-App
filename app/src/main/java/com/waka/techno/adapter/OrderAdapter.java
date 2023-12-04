@@ -1,5 +1,6 @@
 package com.waka.techno.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.waka.techno.R;
 import com.waka.techno.model.Order;
 import com.waka.techno.model.Product;
@@ -17,9 +19,11 @@ import java.util.ArrayList;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
+    Context context;
     ArrayList<Order> orderArrayList = new ArrayList<>();
 
-    public OrderAdapter(ArrayList<Order> orderArrayList) {
+    public OrderAdapter(Context context, ArrayList<Order> orderArrayList) {
+        this.context = context;
         this.orderArrayList = orderArrayList;
     }
 
@@ -50,7 +54,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         holder.qty.setText(String.valueOf("Quantity : "+ order.getQty()));
         holder.price.setText(String.valueOf("LKR "+ order.getProduct().getPrice()+"0"));
         holder.date.setText(order.getDate());
-        holder.imageView.setImageResource(order.getProduct().getProductImage());
+        Glide.with(context).load(order.getProduct().getProductImage().get(0)).into(holder.imageView);
     }
 
     @Override

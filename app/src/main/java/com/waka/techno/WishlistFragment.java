@@ -56,50 +56,24 @@ public class WishlistFragment extends Fragment {
             }
         });
 
-        //Products
+        //Products ---------------------------------------------------------------------------------
         ArrayList<Product> productArrayList = new ArrayList<>();
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
 
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
+        ArrayList<String> productImageList = new ArrayList<>();
+        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
 
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
+        for (int i = 0; i < 5; i++) {
+            productArrayList.add(new Product(
+                    "Logitech - G305",
+                    "Gaming Mouse",
+                    100.00,
+                    productImageList
+            ));
+        }
 
         RecyclerView recyclerView=fragment.findViewById(R.id.wishlistCardView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerView.Adapter<ProductViewHolder> adapter = new WishlistCardAdapter(productArrayList);
+        RecyclerView.Adapter<ProductViewHolder> adapter = new WishlistCardAdapter(getContext(),productArrayList);
 
         if (productArrayList.isEmpty()){
             fragment.findViewById(R.id.emptyWishlistView).setVisibility(View.VISIBLE);

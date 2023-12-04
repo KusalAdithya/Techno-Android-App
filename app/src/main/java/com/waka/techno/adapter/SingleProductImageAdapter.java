@@ -1,5 +1,6 @@
 package com.waka.techno.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +9,21 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.waka.techno.R;
+import com.waka.techno.model.Product;
 import com.waka.techno.model.ProductImages;
 
 import java.util.ArrayList;
 
 public class SingleProductImageAdapter extends RecyclerView.Adapter<SingleProductImageAdapter.ViewHolder> {
 
-    ArrayList<ProductImages> productImagesList;
+    ArrayList<String> productImagesList;
+    Context context;
 
-    public SingleProductImageAdapter(ArrayList<ProductImages> productImagesList) {
+    public SingleProductImageAdapter(ArrayList<String> productImagesList, Context context) {
         this.productImagesList = productImagesList;
+        this.context = context;
     }
 
     public SingleProductImageAdapter() {
@@ -42,8 +47,8 @@ public class SingleProductImageAdapter extends RecyclerView.Adapter<SingleProduc
 
     @Override
     public void onBindViewHolder(@NonNull SingleProductImageAdapter.ViewHolder holder, int position) {
-        ProductImages productImages = productImagesList.get(position);
-        holder.imageView.setImageResource(productImages.getImg());
+        String productImages = productImagesList.get(position);
+        Glide.with(context).load(productImages).into(holder.imageView);
     }
 
     @Override

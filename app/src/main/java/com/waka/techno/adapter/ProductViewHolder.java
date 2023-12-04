@@ -1,5 +1,6 @@
 package com.waka.techno.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.waka.techno.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
+
 
     private ImageView productImage;
     private TextView name, category, price;

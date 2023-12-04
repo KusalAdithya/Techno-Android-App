@@ -92,12 +92,14 @@ public class AllProductsFragment extends Fragment {
 
         //Products View ----------------------------------------------------------------------------
         ArrayList<Product> productArrayList = new ArrayList<>();
+        ArrayList<String> productImageList = new ArrayList<>();
+        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
         for (int i = 0; i < 10; i++) {
             productArrayList.add(new Product(
-                    R.drawable.logitech_mouse,
                     "Logitech - G305",
                     "Gaming Mouse",
-                    100.00
+                    100.00,
+                    productImageList
             ));
         }
 

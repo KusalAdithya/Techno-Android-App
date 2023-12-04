@@ -54,12 +54,15 @@ public class OrderFragment extends Fragment {
 //        int qty= 3;
 
         ArrayList<Order> orderArrayList = new ArrayList<>();
+        ArrayList<String> productImageList = new ArrayList<>();
+        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
         for (int i = 0; i < 5; i++) {
             orderArrayList.add(new Order(
                     new Product(
-                            R.drawable.logitech_mouse,
                             "Logitech - G305",
-                            100.00
+                            "Gaming Mouse",
+                            100.00,
+                            productImageList
                     ),
                     "22:00 23-12-2023",
                     2
@@ -68,7 +71,7 @@ public class OrderFragment extends Fragment {
 
         RecyclerView recyclerView = fragment.findViewById(R.id.orderCardView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        RecyclerView.Adapter<OrderAdapter.ViewHolder> adapter = new OrderAdapter(orderArrayList);
+        RecyclerView.Adapter<OrderAdapter.ViewHolder> adapter = new OrderAdapter(getContext(),orderArrayList);
 
         if (orderArrayList.isEmpty()) {
             fragment.findViewById(R.id.emptyOderView).setVisibility(View.VISIBLE);

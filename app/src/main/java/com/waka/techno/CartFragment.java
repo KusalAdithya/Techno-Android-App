@@ -61,48 +61,20 @@ public class CartFragment extends Fragment {
 
         //Products
         ArrayList<Product> productArrayList = new ArrayList<>();
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
-        productArrayList.add(new Product(
-                R.drawable.logitech_mouse,
-                "Logitech - G305",
-                "Gaming Mouse",
-                100.00
-        ));
+        ArrayList<String> productImageList = new ArrayList<>();
+        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
+        for (int i = 0; i < 5; i++) {
+            productArrayList.add(new Product(
+                    "Logitech - G305",
+                    "Gaming Mouse",
+                    100.00,
+                    productImageList
+            ));
+        }
 
             RecyclerView recyclerView = fragment.findViewById(R.id.cartCardView);
             recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            RecyclerView.Adapter<ProductViewHolder> adapter = new CardAdapter(productArrayList);
+            RecyclerView.Adapter<ProductViewHolder> adapter = new CardAdapter(getContext(), productArrayList);
 
 
             if (productArrayList.isEmpty()){

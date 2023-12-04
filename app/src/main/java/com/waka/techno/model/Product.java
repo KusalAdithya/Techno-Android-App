@@ -1,25 +1,22 @@
 package com.waka.techno.model;
 
+import java.util.ArrayList;
+
 public class Product {
     private int id;
     private String name;
     private String category;
+    private String brand;
     private double price;
     private int qty;
-    private int productImage;
+    private ArrayList<String> productImage;
 
     public Product() {
     }
 
-    public Product(int productImage,String name, String category, double price) {
+    public Product(String name, String category, double price, ArrayList<String> productImage) {
         this.name = name;
         this.category = category;
-        this.price = price;
-        this.productImage = productImage;
-    }
-
-    public Product(int productImage, String name, double price) {
-        this.name = name;
         this.price = price;
         this.productImage = productImage;
     }
@@ -64,11 +61,19 @@ public class Product {
         this.qty = qty;
     }
 
-    public int getProductImage() {
+    public ArrayList<String> getProductImage() {
         return productImage;
     }
 
-    public void setProductImage(int productImage) {
+    public void setProductImage(ArrayList<String> productImage) {
         this.productImage = productImage;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 }

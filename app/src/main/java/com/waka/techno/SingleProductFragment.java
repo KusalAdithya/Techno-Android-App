@@ -39,7 +39,7 @@ public class SingleProductFragment extends Fragment {
         super.onViewCreated(fragment, savedInstanceState);
 
         //Single Product Images --------------------------------------------------------------------
-        ArrayList<ProductImages> imagesArrayList = new ArrayList<>();
+        ArrayList<String> productImageList = new ArrayList<>();
 //        for (ProductImages img : imagesArrayList){
 //            imagesArrayList.add(new ProductImages(
 //                    R.drawable.logitech_mouse
@@ -47,15 +47,12 @@ public class SingleProductFragment extends Fragment {
 //        }
 
         for (int i = 0; i < 5; i++) {
-            imagesArrayList.add(new ProductImages(
-                    R.drawable.logitech_mouse
-            ));
+            productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
         }
 
         RecyclerView recyclerView = fragment.findViewById(R.id.singleProductImgView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false));
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(),1,GridLayoutManager.HORIZONTAL,false));
-        RecyclerView.Adapter<SingleProductImageAdapter.ViewHolder> adapter = new SingleProductImageAdapter(imagesArrayList);
+        RecyclerView.Adapter<SingleProductImageAdapter.ViewHolder> adapter = new SingleProductImageAdapter(productImageList,getContext());
         adapter.getItemCount();
 
 //        if (imagesArrayList.isEmpty()) {
