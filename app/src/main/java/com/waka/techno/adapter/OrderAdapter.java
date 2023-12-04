@@ -17,7 +17,6 @@ import java.util.ArrayList;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
-    ProductViewHolder productViewHolder;
     ArrayList<Order> orderArrayList = new ArrayList<>();
 
     public OrderAdapter(ArrayList<Order> orderArrayList) {

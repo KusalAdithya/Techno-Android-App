@@ -116,6 +116,7 @@ public class AllProductsFragment extends Fragment {
         tagArrayList = new ArrayList<>();
 
         tagsName = new String[]{
+                "All",
                 "SmartPhones",
                 "Laptops",
                 "Computers",

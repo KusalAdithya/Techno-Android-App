@@ -173,7 +173,7 @@
                         android:drawableStart="@drawable/user_icon"
                         android:drawablePadding="5dp"
                         android:hint="First Name"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:padding="8dp" />
 
                     <Space
