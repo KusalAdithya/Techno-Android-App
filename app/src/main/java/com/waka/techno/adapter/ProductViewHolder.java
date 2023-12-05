@@ -12,7 +12,6 @@ import com.waka.techno.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
 
-
     private ImageView productImage;
     private TextView name, category, price;
 
@@ -22,6 +21,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
         name = itemView.findViewById(R.id.productNameText);
         category = itemView.findViewById(R.id.categoryText);
         price = itemView.findViewById(R.id.priceText);
+
     }
 
     public ImageView getProductImage() {

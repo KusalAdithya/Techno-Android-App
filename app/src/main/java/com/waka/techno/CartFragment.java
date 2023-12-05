@@ -65,7 +65,7 @@ public class CartFragment extends Fragment {
         productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
         for (int i = 0; i < 5; i++) {
             productArrayList.add(new Product(
-                    "Logitech - G305",
+                    "Logitech - G305"+i,
                     "Gaming Mouse",
                     100.00,
                     productImageList

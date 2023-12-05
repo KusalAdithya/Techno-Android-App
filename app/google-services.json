@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "846738546142",
+    "project_id": "techno-app-4c1a6",
+    "storage_bucket": "techno-app-4c1a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846738546142:android:fd2bd6aedf9926f382914f",
+        "android_client_info": {
+          "package_name": "com.waka.techno"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ6J34GukB8jGt0QrzQiCDO3C8DDVmZLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

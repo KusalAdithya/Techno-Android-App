@@ -195,6 +195,22 @@
                 </LinearLayout>
 
                 <EditText
+                    android:id="@+id/mobileTextProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/text_field_background"
+                    android:drawableStart="@drawable/mobile_icon"
+                    android:drawablePadding="5dp"
+                    android:ems="10"
+                    android:hint="Mobile Number"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
+                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+                <EditText
                     android:id="@+id/addressText1Profile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -206,9 +222,9 @@
                     android:hint="Address No."
                     android:inputType="text"
                     android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/linearLayout"
-                    app:layout_constraintStart_toStartOf="@+id/linearLayout"
-                    app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+                    app:layout_constraintEnd_toEndOf="@+id/mobileTextProfile"
+                    app:layout_constraintStart_toStartOf="@+id/mobileTextProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/mobileTextProfile" />
 
                 <EditText
                     android:id="@+id/addressText2Profile"
