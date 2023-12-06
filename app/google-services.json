@@ -12,7 +12,20 @@
           "package_name": "com.waka.techno"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "846738546142-c4868h6cu122h69k25o55r1moa0q2c4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waka.techno",
+            "certificate_hash": "f0a57a60031f0344ccebf9e7226ec878cadb3cb1"
+          }
+        },
+        {
+          "client_id": "846738546142-ucrc97r2dcoblleuok0g1fbn96oa402c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDJ6J34GukB8jGt0QrzQiCDO3C8DDVmZLE"
@@ -20,7 +33,49 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846738546142-ucrc97r2dcoblleuok0g1fbn96oa402c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:846738546142:android:e06a5a2a6c3ff15d82914f",
+        "android_client_info": {
+          "package_name": "com.waka.techoadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "846738546142-o7oj3h4a2ko9gte6dpkqe3gvkeueo1mv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.waka.techoadmin",
+            "certificate_hash": "f0a57a60031f0344ccebf9e7226ec878cadb3cb1"
+          }
+        },
+        {
+          "client_id": "846738546142-ucrc97r2dcoblleuok0g1fbn96oa402c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJ6J34GukB8jGt0QrzQiCDO3C8DDVmZLE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "846738546142-ucrc97r2dcoblleuok0g1fbn96oa402c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

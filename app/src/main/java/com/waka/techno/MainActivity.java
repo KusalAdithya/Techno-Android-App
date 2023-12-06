@@ -94,14 +94,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new WishlistFragment());
 
         } else if (item.getItemId() == R.id.bottomNavLogin) {
+
             if (firebaseUser!=null){
                 Toast.makeText(MainActivity.this, "You are already logged!", Toast.LENGTH_SHORT).show();
                 loadFragment(new HomeFragment());
             }else {
                 loadFragment(new LoginFragment());
             }
-
-
 
         } else if (item.getItemId() == R.id.bottomNavProducts) {
             loadFragment(new AllProductsFragment());

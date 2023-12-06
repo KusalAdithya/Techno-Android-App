@@ -93,6 +93,7 @@ public class SignupFragment extends Fragment {
     private void userRegistration(String email, String password) {
 
         firebaseAuth = FirebaseAuth.getInstance();
+
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

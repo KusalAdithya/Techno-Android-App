@@ -1,16 +1,19 @@
 package com.waka.techno.model;
 
 public class User {
-    private String email, firstName,lastName, mobile;
+    private String email, firstName,lastName, mobile,addressNo,addressLine,city;
 
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, String mobile) {
+    public User(String email, String firstName, String lastName, String mobile, String addressNo, String addressLine, String city) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.mobile = mobile;
+        this.addressNo = addressNo;
+        this.addressLine = addressLine;
+        this.city = city;
     }
 
     public String getEmail() {
@@ -43,5 +46,29 @@ public class User {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    public String getAddressNo() {
+        return addressNo;
+    }
+
+    public void setAddressNo(String addressNo) {
+        this.addressNo = addressNo;
+    }
+
+    public String getAddressLine() {
+        return addressLine;
+    }
+
+    public void setAddressLine(String addressLine) {
+        this.addressLine = addressLine;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

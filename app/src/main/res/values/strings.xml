@@ -1,4 +1,7 @@
 <resources>
+
+    <string name="web_client_id">846738546142-ucrc97r2dcoblleuok0g1fbn96oa402c.apps.googleusercontent.com</string>
+
     <string name="app_name">Techno</string>
     <string name="home">Home</string>
     <string name="wish">Wishlist</string>
