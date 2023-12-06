@@ -1,5 +1,6 @@
 package com.waka.techno;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,17 +19,24 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.internal.EdgeToEdgeUtils;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.waka.techno.model.User;
 
 public class SignupFragment extends Fragment {
 
     private EditText emailText, passwordText;
     private FirebaseAuth firebaseAuth;
+    private FirebaseFirestore db;
+
 
     @Nullable
     @Override
@@ -46,27 +54,29 @@ public class SignupFragment extends Fragment {
         emailText = fragment.findViewById(R.id.emailTextSignup);
         passwordText = fragment.findViewById(R.id.passwordTextSignup);
 
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
-
         // signup btn -----------------------------------------------------------------------------
-        fragment.findViewById(R.id.signupBtn).setOnClickListener(new View.OnClickListener() {
+        fragment.findViewById(R.id.signupBtnSignup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
 
-                if (email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) { //TextUtils.isEmpty(email)
+                if (email.isEmpty()) { //TextUtils.isEmpty(email)
                     Toast.makeText(getContext(), "Please enter your email", Toast.LENGTH_LONG).show();
+                    emailText.requestFocus();
+                } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     emailText.setError("Valid email is required");
                     emailText.requestFocus();
                 } else if (password.isEmpty()) {
                     Toast.makeText(getContext(), "Please enter a password", Toast.LENGTH_LONG).show();
                     passwordText.requestFocus();
-                } else if (password.length() <= 5) {
+                } else if (password.length() < 5) {
                     passwordText.setError("Should be ar least 5 characters");
                     passwordText.requestFocus();
                 } else {
                     userRegistration(email, password);
                 }
+
             }
         });
 
@@ -89,15 +99,34 @@ public class SignupFragment extends Fragment {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-                            currentUser.sendEmailVerification();
-                            Toast.makeText(getContext(), "Registration Success! Please Verify Your Email", Toast.LENGTH_LONG).show();
-                            loadFragment(new LoginFragment());
+
+                            User user = new User();
+                            user.setEmail(email);
+
+                            db = FirebaseFirestore.getInstance();
+
+                            db.collection("users").add(user).addOnSuccessListener(
+                                    new OnSuccessListener<DocumentReference>() {
+                                        @Override
+                                        public void onSuccess(DocumentReference documentReference) {
+                                            currentUser.sendEmailVerification();
+                                            Toast.makeText(getContext(), "Registration Success! Please Verify Your Email", Toast.LENGTH_LONG).show();
+                                            loadFragment(new LoginFragment());
+                                        }
+                                    }
+                            ).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(), "db add fail", Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         } else {
                             try {
                                 throw task.getException();
-                            }catch (FirebaseAuthUserCollisionException e){
+                            } catch (FirebaseAuthUserCollisionException e) {
                                 Toast.makeText(getContext(), "User is already registered. Use another email", Toast.LENGTH_SHORT).show();
-                            }catch (Exception e) {
+                            } catch (Exception e) {
                                 Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }

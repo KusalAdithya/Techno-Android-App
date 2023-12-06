@@ -11,17 +11,23 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener {   //implements NavigationView.OnNavigationItemSelectedListener, NavigationBarView.OnItemSelectedListener
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private MaterialToolbar materialToolbar;
     private BottomNavigationView bottomNavigationView;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
+        firebaseAuth= FirebaseAuth.getInstance();
+        firebaseUser=firebaseAuth.getCurrentUser();
+
         if (item.getItemId() == R.id.bottomNavHome || item.getItemId() == R.id.sideNavHome) {
             loadFragment(new SingleProductFragment());
 
@@ -85,7 +94,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new WishlistFragment());
 
         } else if (item.getItemId() == R.id.bottomNavLogin) {
-            loadFragment(new LoginFragment());
+            if (firebaseUser!=null){
+                Toast.makeText(MainActivity.this, "You are already logged!", Toast.LENGTH_SHORT).show();
+                loadFragment(new HomeFragment());
+            }else {
+                loadFragment(new LoginFragment());
+            }
+
+
 
         } else if (item.getItemId() == R.id.bottomNavProducts) {
             loadFragment(new AllProductsFragment());
@@ -99,6 +115,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }else if (item.getItemId() == R.id.bottomNavOrders) {
             loadFragment(new OrderFragment());
+
+        }else if (item.getItemId() == R.id.bottomNavLogout) {
+            Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+            firebaseAuth.signOut();
 
         }
 

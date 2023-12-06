@@ -41,21 +41,21 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(fragment, savedInstanceState);
 
-        emailText = fragment.findViewById(R.id.emailTextSignup);
-        passwordText = fragment.findViewById(R.id.passwordTextSignup);
-
-        String email = emailText.getText().toString();
-        String password = passwordText.getText().toString();
+        emailText = fragment.findViewById(R.id.emailText);
+        passwordText = fragment.findViewById(R.id.passwordText);
 
         // log in btn ------------------------------------------------------------------------------
         fragment.findViewById(R.id.loginBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = emailText.getText().toString();
+                String password = passwordText.getText().toString();
+
                 if (email.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email).matches()) { //TextUtils.isEmpty(email)
                     Toast.makeText(getContext(), "Please enter your email", Toast.LENGTH_LONG).show();
                     emailText.requestFocus();
                 } else if (password.isEmpty()) {
-                    Toast.makeText(getContext(), "Please enter a password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please enter your password", Toast.LENGTH_LONG).show();
                     passwordText.requestFocus();
                 } else {
                     userLogin(email, password);
@@ -85,10 +85,10 @@ public class LoginFragment extends Fragment {
                                  Toast.makeText(getContext(), "Please Verify Your Email", Toast.LENGTH_LONG).show();
                                  return;
                              }
-                             loadFragment(new HomeFragment());
+                             loadFragment(new ProfileFragment()); //loadFragment(new HomeFragment());
                          }
                      }else{
-                         Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
+                         Toast.makeText(getContext(), "Please enter valid details", Toast.LENGTH_SHORT).show();
                      }
                   }
               }

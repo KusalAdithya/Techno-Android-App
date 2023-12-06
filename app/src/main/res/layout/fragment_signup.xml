@@ -107,7 +107,7 @@
 
 
                     <Button
-                        android:id="@+id/signupBtn"
+                        android:id="@+id/signupBtnSignup"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="32dp"
@@ -130,7 +130,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/passwordTextSignup"
                         app:layout_constraintHorizontal_bias="0.503"
                         app:layout_constraintStart_toStartOf="@+id/passwordTextSignup"
-                        app:layout_constraintTop_toBottomOf="@+id/signupBtn" />
+                        app:layout_constraintTop_toBottomOf="@+id/signupBtnSignup" />
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/constraintLayout"
