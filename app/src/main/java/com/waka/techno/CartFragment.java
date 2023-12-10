@@ -62,12 +62,12 @@ public class CartFragment extends Fragment {
         //Products
         ArrayList<Product> productArrayList = new ArrayList<>();
         ArrayList<String> productImageList = new ArrayList<>();
-        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
+        productImageList.add("https://i.ebayimg.com/images/g/-VMAAOSwEp9jmsM~/s-l960.jpg");
         for (int i = 0; i < 5; i++) {
             productArrayList.add(new Product(
-                    "Logitech - G305"+i,
-                    "Gaming Mouse",
-                    100.00,
+                    "Apple iPhone 13",
+                    "Smart Phones",
+                    250000.00,
                     productImageList
             ));
         }

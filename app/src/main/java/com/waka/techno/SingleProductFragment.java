@@ -47,7 +47,7 @@ public class SingleProductFragment extends Fragment {
 //        }
 
         for (int i = 0; i < 5; i++) {
-            productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
+            productImageList.add("https://i.ebayimg.com/images/g/-VMAAOSwEp9jmsM~/s-l960.jpg");
         }
 
         RecyclerView recyclerView = fragment.findViewById(R.id.singleProductImgView);

@@ -158,7 +158,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:lines="2"
-                        android:text="Logitech - G305"
+                        android:text="Apple iPhone 13"
                         android:textColor="@color/dark_blue"
                         android:textSize="20sp"
                         android:textStyle="bold"
@@ -181,7 +181,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Gaming Mouse"
+                        android:text="Smart Phone"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewn63"
                         app:layout_constraintStart_toEndOf="@+id/textViewn63"
                         app:layout_constraintTop_toTopOf="@+id/textViewn63" />
@@ -205,7 +205,11 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
+                        android:text="A 6.1-inch screen (5.4-inch for the iPhone 13 mini) with flat sides and glass plates
+A new A15 Bionic processor that offers faster performance and better battery life
+A redesigned camera system that improves low-light photography and adds cinematic mode for video recording
+A True Depth camera system that enables Face ID and reduces the size of the notch
+A MagSafe connector that allows for wireless charging and accessories"
                         app:layout_constraintEnd_toEndOf="@+id/textView58"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="@+id/textView58"
@@ -227,7 +231,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="G-105"
+                        android:text="iPhone 13"
                         app:layout_constraintBottom_toBottomOf="@+id/textView63"
                         app:layout_constraintStart_toEndOf="@+id/textView63"
                         app:layout_constraintTop_toTopOf="@+id/textView63" />
@@ -248,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:text="Logitech"
+                        android:text="Apple"
                         app:layout_constraintBottom_toBottomOf="@+id/textView65"
                         app:layout_constraintStart_toEndOf="@+id/textView65"
                         app:layout_constraintTop_toTopOf="@+id/textView65" />
@@ -290,7 +294,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Standard Delivery, 3-5 Days"
+                        android:text="Standard Delivery, 3-5 Days \nLKR 250.00"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView68" />
 
@@ -349,10 +353,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="Rs.12,000.00"
-                android:textStyle="bold"
-                android:textSize="16sp"
+                android:text="LKR 250000.00"
                 android:textColor="@color/dark_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/textView61"
                 app:layout_constraintTop_toBottomOf="@+id/textView61" />
 

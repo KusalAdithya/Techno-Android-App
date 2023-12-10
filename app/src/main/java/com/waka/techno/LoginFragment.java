@@ -37,10 +37,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.waka.techno.model.User;
 
 import java.util.Objects;
@@ -105,7 +107,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 String email = emailText.getText().toString();
                 if (email.isEmpty()) {
-                    Toast.makeText(getContext(), "Firstly enter your email", Toast.LENGTH_LONG).show();
+                    emailText.setError("Firstly enter your email");
                     emailText.requestFocus();
                 } else {
                     forgotPassword(email);
@@ -176,32 +178,23 @@ public class LoginFragment extends Fragment {
                     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                     if (currentUser != null) {
-                        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-                        User user = new User();
-                        user.setEmail(currentUser.getEmail());
-
-                        db.collection("users").add(user).addOnSuccessListener(
-                                new OnSuccessListener<DocumentReference>() {
-                                    @Override
-                                    public void onSuccess(DocumentReference documentReference) {
-                                        loadFragment(new HomeFragment());
-                                        Toast.makeText(getContext(), "Logged with Google Account", Toast.LENGTH_LONG).show();
-                                    }
-                                }
-                        ).addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(getContext(), "db add fail", Toast.LENGTH_LONG).show();
-                            }
-                        });
+                        loadFragment(new HomeFragment());
+                        Toast.makeText(getContext(), "Logged with Google Account", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        Toast.makeText(getContext(), "User is already registered. Use another email", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(), "Firebase Auth With Google Failure", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Logging With Google Fail", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -246,7 +239,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-//                    Toast.makeText(getContext(),"Please check your email inbox for password reset link",Toast.LENGTH_LONG).show();
                     Snackbar.make(coordinatorLayout, "Please check your email inbox for password reset link", Snackbar.LENGTH_LONG)
                             .setAction("Open Gmail",
                                     new View.OnClickListener() {

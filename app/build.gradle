@@ -43,6 +43,7 @@ dependencies {
 
     //image Carousel
     implementation 'com.google.android.material:material:1.9.0'
+    //Glide
     implementation 'com.github.bumptech.glide:glide:4.16.0'
 
     // Firebase
@@ -51,5 +52,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth") // Firebase Auth
     implementation("com.google.firebase:firebase-firestore") // FireStore
     implementation("com.google.android.gms:play-services-auth:20.7.0") // Google Auth
+    implementation("com.google.firebase:firebase-database") // realtime db
+    implementation("com.google.firebase:firebase-storage") // storage
+
+    //google map
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
 
 }

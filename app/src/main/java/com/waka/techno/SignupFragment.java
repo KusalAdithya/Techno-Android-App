@@ -1,6 +1,8 @@
 package com.waka.techno;
 
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,21 +14,33 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.IntentSenderRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.auth.api.identity.GetSignInIntentRequest;
+import com.google.android.gms.auth.api.identity.Identity;
+import com.google.android.gms.auth.api.identity.SignInClient;
+import com.google.android.gms.auth.api.identity.SignInCredential;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.internal.EdgeToEdgeUtils;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.waka.techno.model.User;
@@ -35,8 +49,7 @@ public class SignupFragment extends Fragment {
 
     private EditText emailText, passwordText;
     private FirebaseAuth firebaseAuth;
-    private FirebaseFirestore db;
-
+    private SignInClient signInClient;
 
     @Nullable
     @Override
@@ -87,6 +100,35 @@ public class SignupFragment extends Fragment {
                 loadFragment(new LoginFragment());
             }
         });
+
+        // google sign in ---------------------------------------------------------------------------
+        firebaseAuth = FirebaseAuth.getInstance();
+        signInClient = Identity.getSignInClient(requireActivity().getApplicationContext());
+
+        fragment.findViewById(R.id.googleBtnLayout).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GetSignInIntentRequest signInIntentRequest = GetSignInIntentRequest.builder()
+                        .setServerClientId(getString(R.string.web_client_id)).build();
+
+                signInClient.getSignInIntent(signInIntentRequest)
+                        .addOnSuccessListener(new OnSuccessListener<PendingIntent>() {
+                            @Override
+                            public void onSuccess(PendingIntent pendingIntent) {
+                                IntentSenderRequest intentSenderRequest = new IntentSenderRequest
+                                        .Builder(pendingIntent).build();
+                                signInLauncher.launch(intentSenderRequest);
+                                Toast.makeText(getContext(), "Select a Google Account", Toast.LENGTH_LONG).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(), "Logging with Google Failed", Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+        });
+
     }
 
     // register with firebase auth -----------------------------------------------------------------
@@ -104,23 +146,9 @@ public class SignupFragment extends Fragment {
                             User user = new User();
                             user.setEmail(email);
 
-                            db = FirebaseFirestore.getInstance();
-
-                            db.collection("users").add(user).addOnSuccessListener(
-                                    new OnSuccessListener<DocumentReference>() {
-                                        @Override
-                                        public void onSuccess(DocumentReference documentReference) {
-                                            currentUser.sendEmailVerification();
-                                            Toast.makeText(getContext(), "Registration Success! Please Verify Your Email", Toast.LENGTH_LONG).show();
-                                            loadFragment(new LoginFragment());
-                                        }
-                                    }
-                            ).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(getContext(), "db add fail", Toast.LENGTH_LONG).show();
-                                }
-                            });
+                            currentUser.sendEmailVerification();
+                            Toast.makeText(getContext(), "Registration Success! Please Verify Your Email", Toast.LENGTH_LONG).show();
+                            loadFragment(new LoginFragment());
 
                         } else {
                             try {
@@ -133,6 +161,59 @@ public class SignupFragment extends Fragment {
                         }
                     }
                 });
+    }
+
+    //google sign in methods -----------------------------------------------------------------------
+    private final ActivityResultLauncher<IntentSenderRequest> signInLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartIntentSenderForResult(),
+                    new ActivityResultCallback<ActivityResult>() {
+                        @Override
+                        public void onActivityResult(ActivityResult o) {
+                            handleSignInResult(o.getData());
+                        }
+                    });
+
+    private void handleSignInResult(Intent intent) {
+        try {
+            SignInCredential signInCredential = signInClient.getSignInCredentialFromIntent(intent);
+            String idToken = signInCredential.getGoogleIdToken();
+            firebaseAuthWithGoogle(idToken);
+        } catch (ApiException e) {
+            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void firebaseAuthWithGoogle(String idToken) {
+
+        AuthCredential authCredential = GoogleAuthProvider.getCredential(idToken, null);
+        Task<AuthResult> authResultTask = firebaseAuth.signInWithCredential(authCredential);
+        authResultTask.addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+
+                    if (currentUser != null) {
+                        loadFragment(new HomeFragment());
+                        Toast.makeText(getContext(), "Logged with Google Account", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    try {
+                        throw task.getException();
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        Toast.makeText(getContext(), "User is already registered. Use another email", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Logging With Google Fail", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     // load fragment method ------------------------------------------------------------------------

@@ -57,13 +57,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         navigationView.setNavigationItemSelectedListener(this);
         bottomNavigationView.setOnItemSelectedListener(this);
+
+
+
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-        firebaseAuth= FirebaseAuth.getInstance();
-        firebaseUser=firebaseAuth.getCurrentUser();
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser = firebaseAuth.getCurrentUser();
 
         if (item.getItemId() == R.id.bottomNavHome || item.getItemId() == R.id.sideNavHome) {
             loadFragment(new SingleProductFragment());
@@ -77,28 +80,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             item.setChecked(false);
 
         } else if (item.getItemId() == R.id.bottomNavProfile) { //||item.getItemId() == R.id.sideNavProfile
-            loadFragment(new ProfileFragment());
 
-            findViewById(R.id.bottomNavProfile).setSelected(true);
-//            findViewById(R.id.sideNavProfile).setSelected(true); //////////////////////////
-
-            findViewById(R.id.bottomNavHome).setSelected(false);
-            findViewById(R.id.sideNavHome).setSelected(false);
-
-            item.setChecked(false);
+            if (firebaseUser != null) {
+                loadFragment(new ProfileFragment());
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
         } else if (item.getItemId() == R.id.bottomNavCart) {
-            loadFragment(new CartFragment());
+            if (firebaseUser != null) {
+                loadFragment(new CartFragment());
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
         } else if (item.getItemId() == R.id.bottomNavWishlist) {
-            loadFragment(new WishlistFragment());
+            if (firebaseUser != null) {
+                loadFragment(new WishlistFragment());
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
         } else if (item.getItemId() == R.id.bottomNavLogin) {
 
-            if (firebaseUser!=null){
+            if (firebaseUser != null) {
                 Toast.makeText(MainActivity.this, "You are already logged!", Toast.LENGTH_SHORT).show();
                 loadFragment(new HomeFragment());
-            }else {
+            } else {
                 loadFragment(new LoginFragment());
             }
 
@@ -106,18 +117,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loadFragment(new AllProductsFragment());
 
         } else if (item.getItemId() == R.id.bottomNavNotifi) {
-            loadFragment(new NotificationFragment());
-//            findViewById(R.id.bottomNavNotifi).setSelected(true);
+            if (firebaseUser != null) {
+                loadFragment(new NotificationFragment());
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
         } else if (item.getItemId() == R.id.bottomNavAbout) {
             loadFragment(new AboutFragment());
 
-        }else if (item.getItemId() == R.id.bottomNavOrders) {
-            loadFragment(new OrderFragment());
+        } else if (item.getItemId() == R.id.bottomNavOrders) {
+            if (firebaseUser != null) {
+                loadFragment(new OrderFragment());
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
-        }else if (item.getItemId() == R.id.bottomNavLogout) {
-            Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-            firebaseAuth.signOut();
+        } else if (item.getItemId() == R.id.bottomNavLogout) {
+
+            if (firebaseUser != null) {
+                Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+                firebaseAuth.signOut();
+            } else {
+                Toast.makeText(MainActivity.this, "You want to log first!", Toast.LENGTH_SHORT).show();
+                loadFragment(new LoginFragment());
+            }
 
         }
 

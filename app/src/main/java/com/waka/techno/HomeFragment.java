@@ -20,7 +20,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.waka.techno.adapter.CardAdapter;
 import com.waka.techno.adapter.HomeCardAdapter;
 import com.waka.techno.adapter.ImageAdapter;
@@ -29,6 +34,8 @@ import com.waka.techno.model.Product;
 import java.util.ArrayList;
 
 public class HomeFragment extends Fragment {
+
+    private FirebaseDatabase firebaseDatabase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,18 +59,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(fragment, savedInstanceState);
 
-        // Search Bar Auto Complete Text View ------------------------------------------------------
-//        AutoCompleteTextView textInputSearch = (AutoCompleteTextView) fragment.findViewById(R.id.textInputSearch);
-//        String[] colors = {"Red", "Green", "Black",
-//                "Orange", "Blue", "Pink",
-//                "Blush", "Brown", "Yellow"};
-//        ArrayAdapter<String> search = new ArrayAdapter<String>(requireContext(), R.layout.search_result_dialog, colors);
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            textInputSearch.setThreshold(1);
-//            textInputSearch.setAdapter(search);
-//        }
-
+        firebaseDatabase=FirebaseDatabase.getInstance();
 
         // Image Carousel --------------------------------------------------------------------------
         RecyclerView recyclerView = fragment.findViewById(R.id.image_recycler);
@@ -79,24 +75,12 @@ public class HomeFragment extends Fragment {
         adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onClick(ImageView imageView, String path) {
-
             }
         });
 
+
         //Products View ----------------------------------------------------------------------------
         ArrayList<Product> productArrayList = new ArrayList<>();
-        ArrayList<String> productImageList = new ArrayList<>();
-        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
-        for (int i = 0; i < 10; i++) {
-            productArrayList.add(new Product(
-                    "Logitech - G305",
-                    "Gaming Mouse",
-                    100.00,
-                    productImageList
-            ));
-        }
-
-
 
         RecyclerView cardRecycle = fragment.findViewById(R.id.homeCardView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -104,6 +88,25 @@ public class HomeFragment extends Fragment {
         HomeCardAdapter homeCardAdapter = new HomeCardAdapter(productArrayList, getContext());
         cardRecycle.setAdapter(homeCardAdapter);
         cardRecycle.setHasFixedSize(true);
+
+        // load products data ----------------------------------------------------------------------
+        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    Product product = dataSnapshot.getValue(Product.class);
+                    productArrayList.add(product);
+                }
+                homeCardAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
+            }
+        });
+
 
     }
 }

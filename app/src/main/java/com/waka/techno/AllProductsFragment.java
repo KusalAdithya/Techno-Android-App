@@ -17,7 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.waka.techno.adapter.CategorySlideAdapter;
 import com.waka.techno.adapter.HomeCardAdapter;
 import com.waka.techno.model.Product;
@@ -28,8 +33,11 @@ import java.util.Objects;
 
 public class AllProductsFragment extends Fragment {
 
+    private FirebaseDatabase firebaseDatabase;
     ArrayList<Tag> tagArrayList;
     String[] tagsName;
+    ArrayList<Product> productArrayList;
+    private HomeCardAdapter homeCardAdapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +54,15 @@ public class AllProductsFragment extends Fragment {
     public void onViewCreated(@NonNull View fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(fragment, savedInstanceState);
 
+        firebaseDatabase=FirebaseDatabase.getInstance();
+         productArrayList = new ArrayList<>();
+
         //back Button ------------------------------------------------------------------------------
         fragment.findViewById(R.id.backButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadFragment(new HomeFragment());
-//                fragment.findViewById(R.id.bottomNavHome).setSelected(true);
+                requireActivity().findViewById(R.id.bottomNavHome).setSelected(true);
             }
             public void loadFragment(Fragment fragment) {
                 FragmentManager supportFragmentManager = requireActivity().getSupportFragmentManager();
@@ -61,11 +72,47 @@ public class AllProductsFragment extends Fragment {
             }
         });
 
+        //Products View ----------------------------------------------------------------------------
+        // load products data ----------------------------------------------------------------------
+        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
+                    Product product = dataSnapshot.getValue(Product.class);
+                    productArrayList.add(product);
+                }
+                homeCardAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
+            }
+        });
+
+        RecyclerView cardRecycle = fragment.findViewById(R.id.allCardView);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        cardRecycle.setLayoutManager(gridLayoutManager);
+         homeCardAdapter = new HomeCardAdapter(productArrayList, getContext());
+        cardRecycle.setAdapter(homeCardAdapter);
+        cardRecycle.setHasFixedSize(true);
+
+
         //Search Bar Auto Complete Text View -------------------------------------------------------
         AutoCompleteTextView textInputSearch = (AutoCompleteTextView) fragment.findViewById(R.id.textInputSearch);
-        String[] colors = {"Red", "Green", "Black",
-                "Orange", "Blue", "Pink",
-                "Blush", "Brown", "Yellow"};
+        ArrayList<String> productName =new ArrayList<>();
+        String[] colors = new String[0];
+        System.out.println(productArrayList);
+        for (Product data :productArrayList){
+//           productName.add(data.getName());
+            colors = new String[]{data.getName()+","};
+            System.out.println(data.getName());
+        }
+
+//        String[] colors = {"Red", "Green", "Black",
+//                "Orange", "Blue", "Pink",
+//                "Blush", "Brown", "Yellow"};
         ArrayAdapter<String> search = new ArrayAdapter<String>(requireContext(), R.layout.search_result_dialog, colors);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -90,25 +137,6 @@ public class AllProductsFragment extends Fragment {
         CategorySlideAdapter categorySlideAdapter = new CategorySlideAdapter(getContext(), tagArrayList);
         categoryRecycle.setAdapter(categorySlideAdapter);
 
-        //Products View ----------------------------------------------------------------------------
-        ArrayList<Product> productArrayList = new ArrayList<>();
-        ArrayList<String> productImageList = new ArrayList<>();
-        productImageList.add("https://i.ebayimg.com/images/g/6l4AAOSwiadlBoUS/s-l1600.jpg");
-        for (int i = 0; i < 10; i++) {
-            productArrayList.add(new Product(
-                    "Logitech - G305",
-                    "Gaming Mouse",
-                    100.00,
-                    productImageList
-            ));
-        }
-
-        RecyclerView cardRecycle = fragment.findViewById(R.id.allCardView);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
-        cardRecycle.setLayoutManager(gridLayoutManager);
-        HomeCardAdapter homeCardAdapter = new HomeCardAdapter(productArrayList, getContext());
-        cardRecycle.setAdapter(homeCardAdapter);
-        cardRecycle.setHasFixedSize(true);
 
     }
 
