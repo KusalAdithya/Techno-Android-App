@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:fontFamily="@font/nasalization"
-                    android:text="Hello Kusal Adithya"
+                    android:text="Hello User"
                     android:textAlignment="center"
                     android:textColor="@color/dark_blue"
                     android:textSize="12dp"
@@ -112,11 +112,11 @@
 
                 <ImageView
                     android:id="@+id/userDpView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:layout_marginTop="24dp"
                     android:background="@drawable/dp_background"
-                    android:padding="7dp"
+                    android:padding="8dp"
                     android:src="@drawable/user_non_dp"
                     app:layout_constraintEnd_toEndOf="@+id/textView5"
                     app:layout_constraintStart_toStartOf="@+id/textView5"
@@ -138,22 +138,6 @@
                     app:layout_constraintStart_toStartOf="@+id/textView5"
                     app:layout_constraintTop_toBottomOf="@+id/userDpView" />
 
-                <EditText
-                    android:id="@+id/passwordTextProfile"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:background="@drawable/text_field_background"
-                    android:drawableStart="@drawable/password_icon"
-                    android:drawablePadding="5dp"
-                    android:ems="10"
-                    android:hint="Password"
-                    android:inputType="textPassword"
-                    android:padding="8dp"
-                    app:layout_constraintEnd_toEndOf="@+id/emailTextProfile"
-                    app:layout_constraintStart_toStartOf="@+id/emailTextProfile"
-                    app:layout_constraintTop_toBottomOf="@+id/emailTextProfile" />
-
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="match_parent"
@@ -161,9 +145,9 @@
                     android:layout_marginTop="24dp"
                     android:gravity="center_horizontal|center_vertical"
                     android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="@+id/passwordTextProfile"
-                    app:layout_constraintStart_toStartOf="@+id/passwordTextProfile"
-                    app:layout_constraintTop_toBottomOf="@+id/passwordTextProfile">
+                    app:layout_constraintEnd_toEndOf="@+id/emailTextProfile"
+                    app:layout_constraintStart_toStartOf="@+id/emailTextProfile"
+                    app:layout_constraintTop_toBottomOf="@+id/emailTextProfile">
 
                     <EditText
                         android:id="@+id/fnameTextProfile"
@@ -271,6 +255,21 @@
                     app:layout_constraintEnd_toEndOf="@+id/cityTextProfile"
                     app:layout_constraintStart_toStartOf="@+id/cityTextProfile"
                     app:layout_constraintTop_toBottomOf="@+id/cityTextProfile" />
+
+<!--                <Button-->
+<!--                    android:id="@+id/deleteBtnProfile"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="30dp"-->
+<!--                    android:backgroundTint="@color/white"-->
+<!--                    android:fontFamily="@font/nasalization"-->
+<!--                    android:text="Delete Account"-->
+<!--                    android:textColor="@color/red"-->
+<!--                    android:textSize="15dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    app:layout_constraintEnd_toEndOf="@+id/cityTextProfile"-->
+<!--                    app:layout_constraintStart_toStartOf="@+id/updateBtnProfile"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/updateBtnProfile" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

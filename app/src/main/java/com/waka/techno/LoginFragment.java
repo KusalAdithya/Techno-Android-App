@@ -221,7 +221,8 @@ public class LoginFragment extends Fragment {
                                             ).show();
                                     return;
                                 }
-                                loadFragment(new ProfileFragment()); //loadFragment(new HomeFragment());
+                                Toast.makeText(getContext(), "Logged", Toast.LENGTH_SHORT).show();
+                                loadFragment(new HomeFragment());
                             }
                         } else {
                             Toast.makeText(getContext(), "Please enter valid details", Toast.LENGTH_SHORT).show();
