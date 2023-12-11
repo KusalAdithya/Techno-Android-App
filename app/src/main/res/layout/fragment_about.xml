@@ -100,11 +100,24 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <TextView
+                android:id="@+id/textViewn9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:text="Contact us : +9476 131 8088"
+                android:textColor="@color/dark_blue"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+                app:layout_constraintStart_toStartOf="@+id/constraintLayout3"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout3" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayoutn3"
                 android:layout_width="380dp"
                 android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="35dp"
                 android:background="@drawable/fragment_content_background"
                 android:backgroundTint="@color/white"
                 android:paddingBottom="10dp"
@@ -133,12 +146,11 @@
                     android:id="@+id/homeGridLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="36dp"
                     android:background="@drawable/fragment_content_background"
                     android:backgroundTint="@color/light_gray"
                     android:foregroundGravity="center_horizontal"
                     android:padding="15dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -328,6 +340,15 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/homeGridLayout" />
+
+                <WebView
+                    android:id="@+id/videoView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/homeGridLayout"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewn5" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

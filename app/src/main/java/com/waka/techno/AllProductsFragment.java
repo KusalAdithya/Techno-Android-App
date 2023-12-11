@@ -29,7 +29,6 @@ import com.waka.techno.model.Product;
 import com.waka.techno.model.Tag;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class AllProductsFragment extends Fragment {
 
@@ -94,7 +93,7 @@ public class AllProductsFragment extends Fragment {
         RecyclerView cardRecycle = fragment.findViewById(R.id.allCardView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         cardRecycle.setLayoutManager(gridLayoutManager);
-         homeCardAdapter = new HomeCardAdapter(productArrayList, getContext());
+         homeCardAdapter = new HomeCardAdapter(productArrayList, getContext(), AllProductsFragment.this );
         cardRecycle.setAdapter(homeCardAdapter);
         cardRecycle.setHasFixedSize(true);
 

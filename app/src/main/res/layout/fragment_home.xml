@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="8dp"
-                    android:text="New Arrivals"
+                    android:text="Limited, Get Yours Now!"
                     android:textAlignment="center"
                     android:textColor="@color/dark_blue"
                     android:textSize="15dp"

@@ -16,7 +16,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingHorizontal="7dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout3"
@@ -139,8 +140,10 @@
                     android:padding="10dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.444"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutn3">
+                    app:layout_constraintTop_toBottomOf="@+id/constraintLayoutn3"
+                    app:layout_constraintVertical_bias="1.0">
 
                     <!--                    <TextView-->
                     <!--                        android:id="@+id/textView57"-->
@@ -167,6 +170,26 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
+                        android:id="@+id/textViewQty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:text="Quantity        :"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="@+id/textViewn63"
+                        app:layout_constraintTop_toBottomOf="@+id/textView58" />
+
+                    <TextView
+                        android:id="@+id/textQty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Smart Phone"
+                        app:layout_constraintStart_toEndOf="@+id/textViewQty"
+                        app:layout_constraintTop_toTopOf="@+id/textViewQty" />
+
+                    <TextView
                         android:id="@+id/textViewn63"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -174,7 +197,7 @@
                         android:text="Category       :"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView58" />
+                        app:layout_constraintTop_toBottomOf="@+id/textViewQty" />
 
                     <TextView
                         android:id="@+id/textViewn64"
@@ -241,9 +264,8 @@ A MagSafe connector that allows for wireless charging and accessories"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Brand            :"
+                        android:text="Brand             :"
                         android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="@+id/textView63"
                         app:layout_constraintStart_toStartOf="@+id/textView63"
                         app:layout_constraintTop_toBottomOf="@+id/textView63" />
 
@@ -293,7 +315,7 @@ A MagSafe connector that allows for wireless charging and accessories"
                         android:id="@+id/textView69"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginTop="20dp"
                         android:text="Standard Delivery, 3-5 Days \nLKR 250.00"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView68" />
@@ -329,7 +351,7 @@ A MagSafe connector that allows for wireless charging and accessories"
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout7"
             android:layout_width="0dp"
-            android:layout_height="70dp"
+            android:layout_height="110dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/fragment_content_background"
             android:backgroundTint="@color/white"
@@ -337,39 +359,104 @@ A MagSafe connector that allows for wireless charging and accessories"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <ImageButton
+                android:id="@+id/addCartBtn"
+                android:layout_width="100dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:background="@drawable/fragment_content_background"
+                android:backgroundTint="@color/light_gray"
+                app:layout_constraintBottom_toTopOf="@+id/textView61"
+                app:layout_constraintStart_toStartOf="@+id/textView61"
+                app:srcCompat="@drawable/add_cart_icon" />
+
+            <ImageButton
+                android:id="@+id/addWishBtn"
+                android:layout_width="33dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="20dp"
+                android:background="@drawable/custom_btn"
+                android:backgroundTint="@color/light_gray"
+                android:padding="4dp"
+                app:layout_constraintBottom_toBottomOf="@+id/addCartBtn"
+                app:layout_constraintStart_toEndOf="@+id/addCartBtn"
+                app:srcCompat="@drawable/add_wishlist_icon" />
+
             <TextView
                 android:id="@+id/textView61"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:text="Total Price"
+                android:layout_marginBottom="4dp"
+                android:text="Product Price"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toTopOf="@+id/textView62"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/textView62"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginBottom="8dp"
                 android:text="LKR 250000.00"
                 android:textColor="@color/dark_blue"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/textView61"
-                app:layout_constraintTop_toBottomOf="@+id/textView61" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textView61" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/buyBtn"
+                app:layout_constraintEnd_toEndOf="@+id/buyBtn"
+                app:layout_constraintStart_toStartOf="@+id/buyBtn">
+
+                <ImageButton
+                    android:id="@+id/plusButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn"
+                    android:backgroundTint="@color/light_gray"
+                    app:srcCompat="@drawable/minus_icon" />
+
+                <TextView
+                    android:id="@+id/textView24"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal|center_vertical"
+                    android:text="@string/product_qty_ex"
+                    android:textAlignment="center"
+                    android:textSize="13sp" />
+
+                <ImageButton
+                    android:id="@+id/miniButton"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@drawable/custom_btn"
+                    android:backgroundTint="@color/main_blue"
+                    app:srcCompat="@drawable/plus_icon" />
+
+            </LinearLayout>
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buyBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="24dp"
                 android:backgroundTint="@color/dark_blue"
                 android:text="Buy Now"
                 app:layout_constraintBottom_toBottomOf="@+id/textView62"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView61" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

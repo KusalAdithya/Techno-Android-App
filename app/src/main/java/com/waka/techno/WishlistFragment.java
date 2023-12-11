@@ -62,12 +62,12 @@ public class WishlistFragment extends Fragment {
         ArrayList<String> productImageList = new ArrayList<>();
         productImageList.add("https://i.ebayimg.com/images/g/-VMAAOSwEp9jmsM~/s-l960.jpg");
         for (int i = 0; i < 5; i++) {
-            productArrayList.add(new Product(
-                    "Apple iPhone 13",
-                    "Smart Phones",
-                    250000.00,
-                    productImageList
-            ));
+//            productArrayList.add(new Product(
+//                    "Apple iPhone 13",
+//                    "Smart Phones",
+//                    250000.00,
+//                    productImageList
+//            ));
         }
 
         RecyclerView recyclerView=fragment.findViewById(R.id.wishlistCardView);

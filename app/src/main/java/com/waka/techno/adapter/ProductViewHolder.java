@@ -12,8 +12,8 @@ import com.waka.techno.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder {
 
-    private ImageView productImage;
-    private TextView name, category, price;
+    public ImageView productImage;
+    public TextView name, category, price;
 
     public ProductViewHolder(@NonNull View itemView) {
         super(itemView);

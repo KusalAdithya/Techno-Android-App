@@ -7,6 +7,8 @@ public class Product {
     private String name;
     private String category;
     private String brand;
+    private String model;
+    private String Description;
     private double price;
     private int qty;
     private ArrayList<String> productImage;
@@ -14,10 +16,14 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String category, double price, ArrayList<String> productImage) {
+    public Product(String name, String category, String brand, String model, String description, double price, int qty, ArrayList<String> productImage) {
         this.name = name;
         this.category = category;
+        this.brand = brand;
+        this.model = model;
+        Description = description;
         this.price = price;
+        this.qty = qty;
         this.productImage = productImage;
     }
 
@@ -75,5 +81,21 @@ public class Product {
 
     public void setBrand(String brand) {
         this.brand = brand;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public String getDescription() {
+        return Description;
+    }
+
+    public void setDescription(String description) {
+        Description = description;
     }
 }

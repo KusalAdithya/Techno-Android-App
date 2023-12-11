@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         firebaseUser = firebaseAuth.getCurrentUser();
 
         if (item.getItemId() == R.id.bottomNavHome || item.getItemId() == R.id.sideNavHome) {
-            loadFragment(new SingleProductFragment());
+            loadFragment(new HomeFragment());
 
             findViewById(R.id.bottomNavHome).setSelected(true);
             findViewById(R.id.sideNavHome).setSelected(true);

@@ -1,5 +1,6 @@
 package com.waka.techno;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
@@ -24,18 +25,24 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.waka.techno.adapter.CardAdapter;
 import com.waka.techno.adapter.HomeCardAdapter;
 import com.waka.techno.adapter.ImageAdapter;
 import com.waka.techno.model.Product;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.UnaryOperator;
 
 public class HomeFragment extends Fragment {
 
     private FirebaseDatabase firebaseDatabase;
+    private  HomeCardAdapter homeCardAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,7 +66,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(fragment, savedInstanceState);
 
-        firebaseDatabase=FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         // Image Carousel --------------------------------------------------------------------------
         RecyclerView recyclerView = fragment.findViewById(R.id.image_recycler);
@@ -78,24 +85,47 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
         //Products View ----------------------------------------------------------------------------
         ArrayList<Product> productArrayList = new ArrayList<>();
 
         RecyclerView cardRecycle = fragment.findViewById(R.id.homeCardView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
         cardRecycle.setLayoutManager(gridLayoutManager);
-        HomeCardAdapter homeCardAdapter = new HomeCardAdapter(productArrayList, getContext());
+        HomeCardAdapter homeCardAdapter = new HomeCardAdapter(productArrayList, getContext(), HomeFragment.this);
         cardRecycle.setAdapter(homeCardAdapter);
         cardRecycle.setHasFixedSize(true);
 
         // load products data ----------------------------------------------------------------------
-        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                    Product product = dataSnapshot.getValue(Product.class);
+//                        productArrayList.add(product);
+//
+//                }
+//                    homeCardAdapter.notifyDataSetChanged();
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
+//            }
+//        });
 
-                for (DataSnapshot dataSnapshot: snapshot.getChildren()){
-                    Product product = dataSnapshot.getValue(Product.class);
+
+        DatabaseReference databaseReference =firebaseDatabase.getReference("Products");
+        Query query = databaseReference.orderByChild("qty").limitToFirst(6);
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+//                    List<DocumentChange> changes = snapshot.getDocumentChanges();
+//                    List<String> keys = new ArrayList<>();
+                    Product product = snapshot.getValue(Product.class);
+//                    keys.add(snapshot.getKey());
                     productArrayList.add(product);
                 }
                 homeCardAdapter.notifyDataSetChanged();
@@ -103,9 +133,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
+
             }
         });
+
+
 
 
     }
