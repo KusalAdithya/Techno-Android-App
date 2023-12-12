@@ -122,10 +122,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-//                    List<DocumentChange> changes = snapshot.getDocumentChanges();
-//                    List<String> keys = new ArrayList<>();
                     Product product = snapshot.getValue(Product.class);
-//                    keys.add(snapshot.getKey());
                     productArrayList.add(product);
                 }
                 homeCardAdapter.notifyDataSetChanged();

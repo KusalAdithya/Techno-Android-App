@@ -84,7 +84,6 @@ public class ProfileFragment extends Fragment {
 
 
         //get data ---------------------------------------------------------------------------------
-
         db.collection("users").document(firebaseAuth.getUid()).get().addOnSuccessListener(
                 new OnSuccessListener<com.google.firebase.firestore.DocumentSnapshot>() {
                     @Override

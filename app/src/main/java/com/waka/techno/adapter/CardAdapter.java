@@ -19,35 +19,37 @@ import com.waka.techno.model.Product;
 
 import java.util.ArrayList;
 
-public class CardAdapter extends RecyclerView.Adapter<ProductViewHolder> {
+public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHolder> {
 
     Context context;
     private ArrayList<Product> productList;
+    Fragment fragment;
  View card;
 
-    public CardAdapter(Context context, ArrayList<Product> productList) {
+    public CardAdapter(Context context, ArrayList<Product> productList,Fragment fragment) {
         this.context = context;
         this.productList = productList;
+        this.fragment=fragment;
     }
 
     @NonNull
     @Override
-    public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public CardAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
         card = inflater.inflate(R.layout.cart_card,parent, false);
 
 //        name = card.findViewById(R.id.productNameText);
-        return new ProductViewHolder(card);
+        return new CardAdapter.ProductViewHolder(card);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CardAdapter.ProductViewHolder holder, int position) {
 
         Product item = productList.get(position);
-        Glide.with(context).load(item.getProductImage().get(0)).into(holder.getProductImage());
-        holder.getName().setText(item.getName());
-        holder.getCategory().setText(item.getCategory());
-        holder.getPrice().setText(String.valueOf("LKR "+item.getPrice()+0));
+        Glide.with(context).load(item.getProductImage().get(0)).into(holder.productImage);
+        holder.name.setText(item.getName());
+        holder.category.setText(item.getCategory());
+        holder.price.setText(String.valueOf("LKR "+item.getPrice()+0));
 //        TextView name = card.findViewById(R.id.productNameText);
 
 //        View view=LayoutInflater.from(MainActivity).inflater.inflate(R.layout.cart_card,parent, false);
@@ -68,6 +70,21 @@ public class CardAdapter extends RecyclerView.Adapter<ProductViewHolder> {
     @Override
     public int getItemCount() {
         return productList.size();
+    }
+
+    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+
+        public ImageView productImage;
+        public TextView name, category, price;
+
+        public ProductViewHolder(@NonNull View itemView) {
+            super(itemView);
+            productImage = itemView.findViewById(R.id.productImage);
+            name = itemView.findViewById(R.id.productNameText);
+            category = itemView.findViewById(R.id.categoryText);
+            price = itemView.findViewById(R.id.priceText);
+
+        }
     }
 }
 

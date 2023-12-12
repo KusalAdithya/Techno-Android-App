@@ -18,12 +18,16 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.waka.techno.adapter.SingleProductImageAdapter;
 import com.waka.techno.model.Product;
 import com.waka.techno.model.ProductImages;
@@ -34,12 +38,11 @@ public class SingleProductFragment extends Fragment {
 
     private String productName;
     private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
     private TextView nameText, category, model, brand, description, price,qty;
-
     private ArrayList<String> productImageList;
-
     private RecyclerView recyclerView;
-
     private SingleProductImageAdapter singleProductImageAdapter;
     private Product product;
 
@@ -62,6 +65,9 @@ public class SingleProductFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View fragment, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(fragment, savedInstanceState);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseUser=firebaseAuth.getCurrentUser();
 
         nameText = fragment.findViewById(R.id.textView58);
         category = fragment.findViewById(R.id.textViewn64);
@@ -100,12 +106,58 @@ public class SingleProductFragment extends Fragment {
         fragment.findViewById(R.id.addCartBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long currentTimeMillis = System.currentTimeMillis();
 
+                // add to cart db
+                FirebaseDatabase.getInstance().getReference("Cart").child(firebaseUser.getUid())
+                        .child(product.getName()).setValue(currentTimeMillis)
+                        .addOnCompleteListener(
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(getContext(), "Product added to cart successfully.", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+                        ).addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(), "Add to cart Fail. Try Again "+e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        );
             }
         });
 
         // add to wishlist btn ---------------------------------------------------------------------
+        fragment.findViewById(R.id.addWishBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                // add to cart db
+                FirebaseDatabase.getInstance().getReference("Wishlist").child(firebaseUser.getUid())
+                        .child(product.getName()).setValue(product.getName())
+                        .addOnCompleteListener(
+                                new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()){
+                                            Toast.makeText(getContext(), "Product added to wishlist successfully.", Toast.LENGTH_LONG).show();
+                                        }
+                                    }
+                                }
+                        ).addOnFailureListener(
+                                new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(getContext(), "Add to wishlist Fail. Try Again "+e.getMessage(), Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                        );
+            }
+        });
 
     }
 }
