@@ -36,6 +36,7 @@ import com.waka.techno.adapter.ImageAdapter;
 import com.waka.techno.model.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
 
 
         DatabaseReference databaseReference =firebaseDatabase.getReference("Products");
-        Query query = databaseReference.orderByChild("qty").limitToFirst(6);
+        Query query = databaseReference.orderByChild("dateTime").limitToLast(6);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,6 +126,7 @@ public class HomeFragment extends Fragment {
                     Product product = snapshot.getValue(Product.class);
                     productArrayList.add(product);
                 }
+                Collections.reverse(productArrayList);
                 homeCardAdapter.notifyDataSetChanged();
             }
 

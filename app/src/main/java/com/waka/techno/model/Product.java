@@ -1,9 +1,11 @@
 package com.waka.techno.model;
 
+import com.google.type.DateTime;
+
 import java.util.ArrayList;
 
 public class Product {
-    private int id;
+    private String id;
     private String name;
     private String category;
     private String brand;
@@ -11,12 +13,13 @@ public class Product {
     private String Description;
     private double price;
     private int qty;
+    private String dateTime;
     private ArrayList<String> productImage;
 
     public Product() {
     }
 
-    public Product(String name, String category, String brand, String model, String description, double price, int qty, ArrayList<String> productImage) {
+    public Product(String name, String category, String brand, String model, String description, double price, int qty, String dateTime, ArrayList<String> productImage) {
         this.name = name;
         this.category = category;
         this.brand = brand;
@@ -24,14 +27,15 @@ public class Product {
         Description = description;
         this.price = price;
         this.qty = qty;
+        this.dateTime = dateTime;
         this.productImage = productImage;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -97,5 +101,13 @@ public class Product {
 
     public void setDescription(String description) {
         Description = description;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 }

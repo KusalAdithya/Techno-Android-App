@@ -29,6 +29,7 @@ import com.waka.techno.model.Product;
 import com.waka.techno.model.Tag;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AllProductsFragment extends Fragment {
 
@@ -73,7 +74,7 @@ public class AllProductsFragment extends Fragment {
 
         //Products View ----------------------------------------------------------------------------
         // load products data ----------------------------------------------------------------------
-        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference("Products").orderByChild("dateTime").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -81,12 +82,13 @@ public class AllProductsFragment extends Fragment {
                     Product product = dataSnapshot.getValue(Product.class);
                     productArrayList.add(product);
                 }
+                Collections.reverse(productArrayList);
                 homeCardAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Failed to load! Try again later", Toast.LENGTH_LONG).show();
             }
         });
 
