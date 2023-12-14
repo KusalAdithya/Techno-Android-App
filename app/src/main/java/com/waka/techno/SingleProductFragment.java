@@ -1,14 +1,18 @@
 package com.waka.techno;
 
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,12 +31,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.waka.techno.adapter.SingleProductImageAdapter;
 import com.waka.techno.model.Product;
 import com.waka.techno.model.ProductImages;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SingleProductFragment extends Fragment {
 
@@ -40,11 +47,13 @@ public class SingleProductFragment extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser firebaseUser;
+    private FirebaseFirestore db;
     private TextView nameText, category, model, brand, description, price,qty;
     private ArrayList<String> productImageList;
     private RecyclerView recyclerView;
     private SingleProductImageAdapter singleProductImageAdapter;
     private Product product;
+    private String msg;
 
     public SingleProductFragment(Product product) {
         this.product = product;
@@ -68,6 +77,7 @@ public class SingleProductFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser=firebaseAuth.getCurrentUser();
+        db=FirebaseFirestore.getInstance();
 
         nameText = fragment.findViewById(R.id.textView58);
         category = fragment.findViewById(R.id.textViewn64);
@@ -110,7 +120,7 @@ public class SingleProductFragment extends Fragment {
 
                 // add to cart db
                 FirebaseDatabase.getInstance().getReference("Cart").child(firebaseUser.getUid())
-                        .child(product.getName()).setValue(currentTimeMillis)
+                        .child(product.getId()).setValue(currentTimeMillis)
                         .addOnCompleteListener(
                                 new OnCompleteListener<Void>() {
                                     @Override
@@ -158,6 +168,50 @@ public class SingleProductFragment extends Fragment {
                         );
             }
         });
+
+        // search user -----------------------------------------------------------------------------
+        db.collection("users/"+firebaseUser.getUid()).get().addOnCompleteListener(
+                new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        QuerySnapshot result = task.getResult();
+                        if (result.isEmpty()) {
+                            Toast.makeText(getContext(), "Update your profile first!", Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                }
+        ).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+            }
+        });
+
+        // Buy now btn------------------------------------------------------------------------------
+        fragment.findViewById(R.id.buyBtn).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+
+                        msg = "Dear "+firebaseUser.getDisplayName()+"\n" +
+                                "\n" +
+                                "Thank you for choosing Techno! Your order has been successfully placed, and we're thrilled to be a part of your shopping experience.";
+
+
+//                        if(ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+//                            SmsManager smsManager = SmsManager.getDefault();
+//                            smsManager.sendTextMessage(mobileNumber,null,message,null,null);
+//                            Toast.makeText(getContext(),"SMS Sent Successfully.",Toast.LENGTH_LONG).show();
+//                        }else {
+//                            ActivityCompat.requestPermissions(getActivity(),new String[]{
+//                                    Manifest.permission.SEND_SMS
+//                            },100);
+//                        }
+                    }
+                }
+        );
 
     }
 }

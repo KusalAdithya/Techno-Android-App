@@ -97,37 +97,19 @@ public class HomeFragment extends Fragment {
         cardRecycle.setHasFixedSize(true);
 
         // load products data ----------------------------------------------------------------------
-//        firebaseDatabase.getReference("Products").addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-//                    Product product = dataSnapshot.getValue(Product.class);
-//                        productArrayList.add(product);
-//
-//                }
-//                    homeCardAdapter.notifyDataSetChanged();
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Toast.makeText(getContext(), "Db data load fail", Toast.LENGTH_LONG).show();
-//            }
-//        });
-
-
         DatabaseReference databaseReference =firebaseDatabase.getReference("Products");
         Query query = databaseReference.orderByChild("dateTime").limitToLast(6);
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                productArrayList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Product product = snapshot.getValue(Product.class);
                     productArrayList.add(product);
                 }
                 Collections.reverse(productArrayList);
                 homeCardAdapter.notifyDataSetChanged();
+
             }
 
             @Override

@@ -4,15 +4,27 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.waka.techno.MainActivity;
 import com.waka.techno.R;
 import com.waka.techno.model.Product;
@@ -24,7 +36,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
     Context context;
     private ArrayList<Product> productList;
     Fragment fragment;
- View card;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    DatabaseReference databaseReference;
 
     public CardAdapter(Context context, ArrayList<Product> productList,Fragment fragment) {
         this.context = context;
@@ -36,9 +51,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
     @Override
     public CardAdapter.ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater=LayoutInflater.from(parent.getContext());
-        card = inflater.inflate(R.layout.cart_card,parent, false);
+        View card = inflater.inflate(R.layout.cart_card,parent, false);
 
-//        name = card.findViewById(R.id.productNameText);
         return new CardAdapter.ProductViewHolder(card);
     }
 
@@ -54,17 +68,27 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
 
 //        View view=LayoutInflater.from(MainActivity).inflater.inflate(R.layout.cart_card,parent, false);
 
-//        card.findViewById(R.id.imageButton7).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(context, String.valueOf(name), Toast.LENGTH_SHORT).show();
-//
-//            }
-//        });
-    }
+        holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firebaseAuth = FirebaseAuth.getInstance();
+                firebaseUser = firebaseAuth.getCurrentUser();
+                String pId = item.getId();
+                String uid = firebaseUser.getUid();
 
-    public void cart(){
+                databaseReference = FirebaseDatabase.getInstance().getReference("Cart").child(uid);
 
+                databaseReference.child(pId).removeValue(new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                        Toast.makeText(v.getContext(), "Deleted..", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override
@@ -76,6 +100,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
 
         public ImageView productImage;
         public TextView name, category, price;
+        public ImageButton deleteBtn;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -83,6 +108,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
             name = itemView.findViewById(R.id.productNameText);
             category = itemView.findViewById(R.id.categoryText);
             price = itemView.findViewById(R.id.priceText);
+            deleteBtn=itemView.findViewById(R.id.imageButton7);
 
         }
     }
