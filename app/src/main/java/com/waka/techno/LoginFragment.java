@@ -132,7 +132,7 @@ public class LoginFragment extends Fragment {
                                 IntentSenderRequest intentSenderRequest = new IntentSenderRequest
                                         .Builder(pendingIntent).build();
                                 signInLauncher.launch(intentSenderRequest);
-                                Toast.makeText(getContext(), "Select a Google Account", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Select a Google Account", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
@@ -178,7 +178,7 @@ public class LoginFragment extends Fragment {
                     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
                     if (currentUser != null) {
-                        loadFragment(new HomeFragment());
+                        startActivity(new Intent(getActivity(), MainActivity.class));
                         Toast.makeText(getContext(), "Logged with Google Account", Toast.LENGTH_LONG).show();
                     }
                 } else {
@@ -222,7 +222,7 @@ public class LoginFragment extends Fragment {
                                     return;
                                 }
                                 Toast.makeText(getContext(), "Logged", Toast.LENGTH_SHORT).show();
-                                loadFragment(new HomeFragment());
+                                startActivity(new Intent(getActivity(), MainActivity.class));
                             }
                         } else {
                             Toast.makeText(getContext(), "Please enter valid details", Toast.LENGTH_SHORT).show();

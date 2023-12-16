@@ -203,18 +203,37 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
+                    <FrameLayout
+                        android:id="@+id/videoView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="@+id/textView9"
+                        app:layout_constraintStart_toStartOf="@+id/textView9"
+                        app:layout_constraintTop_toBottomOf="@+id/textView9">
+
+                        <VideoView
+                            android:id="@+id/videoView22"
+                            android:layout_width="wrap_content"
+                            android:layout_height="200dp"
+                            app:layout_constraintEnd_toEndOf="@+id/textView9"
+                            app:layout_constraintStart_toStartOf="@+id/textView9"
+                            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                    </FrameLayout>
+
+
                     <!--                    A Seamless Shopping Journey-->
                     <TextView
                         android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
+                        android:layout_marginTop="8dp"
                         android:text="A Seamless Shopping Journey"
                         android:textColor="@color/dark_blue"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+                        app:layout_constraintTop_toBottomOf="@+id/videoView2" />
 
                     <TextView
                         android:id="@+id/textView11"
@@ -349,6 +368,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/homeGridLayout"
                     app:layout_constraintTop_toBottomOf="@+id/textViewn5" />
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

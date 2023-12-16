@@ -90,6 +90,7 @@ public class CartFragment extends Fragment {
         CardAdapter adapter = new CardAdapter(getContext(), productArrayList, CartFragment.this);
         List<String> list = new ArrayList<>();
 
+        int itemSize;
 
         // load from db ----------------------------------------------------------------------------
         firebaseDatabase.getReference("Cart/" + firebaseUser.getUid()).orderByValue()
@@ -109,11 +110,14 @@ public class CartFragment extends Fragment {
                             }
                             Collections.reverse(list);
 
+                            final int[] sub = new int[1];
                             for (String pId : list) {
                                 DatabaseReference reference = firebaseDatabase.getReference("Products");
                                 reference.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        double sub1 = 0;
                                         for (DataSnapshot data : snapshot.getChildren()) {
 
                                             Product product = data.getValue(Product.class);
@@ -121,14 +125,16 @@ public class CartFragment extends Fragment {
                                             if (product.getId().equals(pId)) {
                                                 productArrayList.add(product);
 //                                               price = String.valueOf(product.getPrice());
-
-                                                subTotal.setText("LKR. " + String.valueOf(product.getPrice()) + "0");
+//sub[0] = (int) product.getPrice();
+                                                sub1 = sub1 + product.getPrice();
                                             }
 
-
-                                            items.setText(String.valueOf(productArrayList.size()) + " Items");
-
+                                            subTotal.setText("LKR " + (sub1) + "0");
                                         }
+
+                                        // Load items count ----------------------------------------
+                                        items.setText(productArrayList.size() + " Items");
+
                                         adapter.notifyDataSetChanged();
                                         recyclerView.setAdapter(adapter);
                                     }
@@ -144,6 +150,12 @@ public class CartFragment extends Fragment {
                             productArrayList.clear();
                         }
 
+                        // Delivery total ----------------------------------------------------------
+                        int resultDelivery = 250 * Integer.valueOf((int) dataSnapshot.getChildrenCount());
+                        delivery.setText("LKR " + resultDelivery + ".00");
+
+                        // total --------------------------------------------------------------------------
+                        total.setText("LKR " + (500 + resultDelivery) + ".00");
                     }
 
                     @Override
@@ -151,13 +163,6 @@ public class CartFragment extends Fragment {
                         Toast.makeText(getContext(), "Connection Failed. Try Again Later", Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-        // Load items count ------------------------------------------------------------------------
-//        items.setText(String.valueOf(productArrayList.size()) + " Items in the cart");
-
-        // load sub total --------------------------------------------------------------------------
-//        productArrayList.get(product.getQty())
 
         // Ckeckout btn ----------------------------------------------------------------------------
         fragment.findViewById(R.id.button2);

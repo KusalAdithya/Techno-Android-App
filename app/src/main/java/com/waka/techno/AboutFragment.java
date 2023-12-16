@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,7 +60,8 @@ public class AboutFragment extends Fragment {
             }
         });
 
-        // load google map
+
+        // load google map ----------------------------------------------------------------------------------------------------
         SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         supportMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -71,42 +73,27 @@ public class AboutFragment extends Fragment {
                 googleMap.clear();
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
                 googleMap.addMarker(markerOptions);
-
             }
         });
 
-        // video
+        //video ------------------------------------------------------------------------------------
+        VideoView videoview = fragment.findViewById(R.id.videoView22);
+//        String videoPath =   Environment.getExternalStorageDirectory().getPath() + "/DCIM/" + editText1.getText() + ".mp4";
+        String videoPath = "https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4";
+        Uri uri = Uri.parse(videoPath);
+        videoview.setVideoURI(uri);
 
+        MediaController mediaController = new MediaController(getContext());
+        videoview.setMediaController(mediaController);
+        mediaController.setAnchorView(videoview);
+
+        // video url -------------------------------------------------------------------------------
         String video = "<iframe width=\"100%\" height=\"100%\" src=\"https://www.youtube.com/embed/xqyUdNxWazA?si=MQCHLwX4L6C8pyHP\" title=\"YouTube video player\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowfullscreen></iframe>";
-
         webView.loadData(video,"text/html","utf-8");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.setWebViewClient(new WebViewClient());
 
-
-//        vw.setMediaController(new MediaController(getContext()));
-//
-//        // video name should be in lower case alphabet.
-////        videolist.add(R.raw.middle);
-////        videolist.add(R.raw.faded);
-////        videolist.add(R.raw.aeroplane);
-////        setVideo(videolist.get(0));
-//
-//        String uriPath= "https://www.youtube.com/watch?v=xqyUdNxWazA";
-//        Uri uri = Uri.parse(uriPath);
-//        vw.setVideoURI(uri);
-//        vw.start();
     }
 
-//    public void setVideo(int id)
-//    {
-//        String uriPath
-//                = "android.resource://"
-//                + getPackageName() + "/" + id;
-//        Uri uri = Uri.parse(uriPath);
-//        vw.setVideoURI(uri);
-//        vw.start();
-//    }
 
 }
-//}

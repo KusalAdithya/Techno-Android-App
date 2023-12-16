@@ -274,8 +274,7 @@ public class ProfileFragment extends Fragment {
         String path = imgUri.getPath() + UUID.randomUUID().toString();
         StorageReference reference = storageReference = FirebaseStorage.getInstance().getReference()
                 .child("userImages/").child(path);
-        reference.putFile(imgUri)
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        reference.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();

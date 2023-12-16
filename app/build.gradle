@@ -58,4 +58,10 @@ dependencies {
     //google map
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
 
+    // GSON
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+    // Notification
+//    implementation "androidx.core:core:2.2.0"
+
 }

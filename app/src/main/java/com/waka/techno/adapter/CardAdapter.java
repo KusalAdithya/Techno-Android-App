@@ -64,10 +64,36 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
         holder.name.setText(item.getName());
         holder.category.setText(item.getCategory());
         holder.price.setText(String.valueOf("LKR "+item.getPrice()+0));
-//        TextView name = card.findViewById(R.id.productNameText);
 
-//        View view=LayoutInflater.from(MainActivity).inflater.inflate(R.layout.cart_card,parent, false);
+        // qty btn ---------------------------------------------------------------------------------
+        int currentQty = item.getQty();
+        holder.miniBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int qtyText = Integer.parseInt((String)  holder.qtyView.getText());
 
+                if (qtyText > 1) {
+                    holder.qtyView.setText(String.valueOf(qtyText - 1));
+                } else {
+                    Toast.makeText(v.getContext(), "You can't go below 1", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        holder.plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int qtyText = Integer.parseInt((String)  holder.qtyView.getText());
+
+                if (qtyText < currentQty) {
+                    holder.qtyView.setText(String.valueOf(qtyText + 1));
+                } else {
+                    Toast.makeText(v.getContext(), "Maximum quantity deserve", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
+        // delete btn ------------------------------------------------------------------------------
         holder.deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,8 +125,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView productImage;
-        public TextView name, category, price;
-        public ImageButton deleteBtn;
+        public TextView name, category, price,qtyView;
+        public ImageButton deleteBtn,miniBtn, plusBtn;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +135,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ProductViewHol
             category = itemView.findViewById(R.id.categoryText);
             price = itemView.findViewById(R.id.priceText);
             deleteBtn=itemView.findViewById(R.id.imageButton7);
+            qtyView=itemView.findViewById(R.id.textView24);
+            miniBtn=itemView.findViewById(R.id.imageButton6);
+            plusBtn=itemView.findViewById(R.id.imageButton5);
 
         }
     }

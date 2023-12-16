@@ -7,6 +7,14 @@ public class Notification {
     private String title;
     private String description;
     private String dateTime;
+    private int img;
+
+    public Notification(String title, String description, String dateTime,int img) {
+        this.title = title;
+        this.description = description;
+        this.dateTime = dateTime;
+        this.img = img;
+    }
 
     public Notification(String title, String description, String dateTime) {
         this.title = title;
@@ -44,5 +52,13 @@ public class Notification {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public int getImg() {
+        return img;
+    }
+
+    public void setImg(int img) {
+        this.img = img;
     }
 }
