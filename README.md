@@ -3,7 +3,7 @@
 ## Overview
 The **M-Commerce Application** is a modern mobile commerce platform designed for online shopping. Built using current mobile development tools, the application ensures scalability, security, and maintainability while offering an intuitive user experience.
 
-Customer app of this repo: https://github.com/KusalAdithya/Techno-Admin-Android-App
+Admin app of this repo: https://github.com/KusalAdithya/Techno-Admin-Android-App
 
 ### Technologies Used
 We leverage a robust tech stack to ensure seamless functionality, excellent performance, and a smooth user experience:
